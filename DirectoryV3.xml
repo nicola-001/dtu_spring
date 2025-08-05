@@ -1,4 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?> 
  <trees>
-     <tree path="/pom.xml" title="父pom"/>
- </trees>
+     <tree path="/pom.xml" title="父工程pom" extension="" presentableText="" tooltipTitle="" icon="" textColor=""
+           backgroundColor=""/>
+     <tree path="/common" title="公共模块--工具类、公用配置" extension="" presentableText="" tooltipTitle="" icon=""
+           textColor="" backgroundColor=""/>
+     <tree path="/model" title="数据模型---与数据库相对应的实体类"/>
+     <tree path="/web" title="web模块"/>
+     <tree path="/common/pom.xml" title="common的pom文件"/>
+     <tree path="/model/pom.xml" title="model的pom文件"/>
+     <tree path="/web/pom.xml" title="web的pom文件"/>
+     <tree path="/common/src/main/java/com/easyarch/constant/RedisConstant.java" title="redis常量"/>
+     <tree path="/common/src/main/java/com/easyarch/exception/GlobalExceptionHandler.java" title="全局异常处理"
+           extension="" presentableText="" tooltipTitle="" icon="" textColor="" backgroundColor=""/>
+    <tree path="/common/src/main/java/com/easyarch/exception/MyException.java" title="自定义异常处理"/>
+    <tree path="/common/src/main/java/com/easyarch/mybatisplus/MybatisPlusConfiguration.java"
+          title="MyBatisplus配置类"/>
+    <tree path="/common/src/main/java/com/easyarch/mybatisplus/MybatisMetaObjectHandler.java"
+          title="Mybatisplus自动填充"/>
+    <tree path="/common/src/main/java/com/easyarch/redis/RedisConfiguration.java" title="自定义RedisTemplate"/>
+    <tree path="/common/src/main/java/com/easyarch/redis" title="自定义RedisTemplate"/>
+    <tree path="/common/src/main/java/com/easyarch/exception" title="异常处理"/>
+    <tree path="/common/src/main/java/com/easyarch/constant" title="常量定义"/>
+    <tree path="/common/src/main/java/com/easyarch/result" title="全局统一返回处理"/>
+</trees>
