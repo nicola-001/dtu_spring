@@ -1,9 +1,12 @@
 package com.easyarch.vo.devicesInfo;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+
+import java.util.Date;
 
 @Data
 @Schema(description = "设备信息")
@@ -40,4 +43,8 @@ public class DeviceDec extends Device {
     @Schema(description = "设备描述")
     @TableField(value = "device_description")
     private String deviceDescription;
+
+    @Schema(description = "更新时间")
+    @TableField(value = "updated_at", fill = FieldFill.UPDATE)
+    private String updatedAt;
 }

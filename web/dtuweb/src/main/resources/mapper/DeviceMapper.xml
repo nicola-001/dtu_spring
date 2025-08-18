@@ -22,6 +22,7 @@
                di.device_code           AS deviceCode,
                di.device_name           AS deviceName,
                di.status                AS status,
+               di.updated_at            AS updatedTime,
                di.installation_location AS installationLocation
         FROM user_device_relation udr
                  INNER JOIN device_info di

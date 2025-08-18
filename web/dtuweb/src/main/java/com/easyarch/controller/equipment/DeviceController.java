@@ -1,5 +1,7 @@
 package com.easyarch.controller.equipment;
 
+import com.easyarch.login.LoginUser;
+import com.easyarch.login.LoginUserHolder;
 import com.easyarch.result.Result;
 import com.easyarch.service.DeviceService;
 import com.easyarch.vo.devicesInfo.DeviceDec;
@@ -26,12 +28,23 @@ public class DeviceController {
     @GetMapping("/meters")
     @Operation(summary = "根据条件获取设备列表")
     public Result<List<DeviceDec>> getAllDevice(
-            @RequestParam String userId,
             @RequestParam(required = false) String type,
             @RequestParam(required = false) String deviceName,
             @RequestParam(required = false) String status) {
+        //获取当前登录用户id
+        LoginUser loginUser = LoginUserHolder.getLoginUser();
+        System.out.println("id是:" + loginUser.getUserId());
+        String userId = String.valueOf(loginUser.getUserId());
         Result<List<DeviceDec>> res = deviceService.getDevicesByConditions(userId, type, deviceName, status);
         return res;
 
+    }
+
+    //根据设设备信息获取设备详情信息
+    @GetMapping("/devices")
+    @Operation(summary = "根据设备信息获取设备详情")
+    public Result<DeviceDec> getDeviceInfo(@RequestParam String deviceCode) {
+
+        return null;
     }
 }
