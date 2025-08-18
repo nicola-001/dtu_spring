@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.easyarch.mapper.device.DeviceMapper">
+
+    <!--
+        从【用户设备关联表】找出当前用户能访问的设备，
+        拿设备编号去【设备信息表】（device_info）查设备的基本信息，
+        再去【设备连接配置表】（device_connection）查通信参数（可能没有，所以用 LEFT JOIN）
+    -->
+    <select id="getDevicesByConditions" resultType="com.easyarch.vo.devicesInfo.DeviceDec">
+        SELECT dc.baud_rate             AS baudRate,
+               dc.data_bits             AS dataBits,
+               dc.stop_bits             AS stopBits,
+               dc.parity                AS parity,
+               dc.protocol_type         AS protocolType,
+
+               di.device_type           AS deviceType,
+               di.cumulative_usage      AS cumulativeUsage,
+               di.device_description    AS deviceDescription,
+               di.device_code           AS deviceCode,
+               di.device_name           AS deviceName,
+               di.status                AS status,
+               di.installation_location AS installationLocation
+        FROM user_device_relation udr
+                 INNER JOIN device_info di
+                            ON udr.device_code = di.device_code
+                 LEFT JOIN device_connection dc
+                           ON di.device_code = dc.device_code
+        <where>
+            udr.user_id = #{userId}
+
+            <if test="type != null and type != ''">
+                AND di.device_type = #{type}
+            </if>
+
+            <if test="deviceName != null and deviceName != ''">
+                AND di.device_name LIKE CONCAT('%', #{deviceName}, '%')
+            </if>
+
+            <if test="status != null and status != ''">
+                AND di.status = #{status}
+            </if>
+        </where>
+    </select>
+</mapper>

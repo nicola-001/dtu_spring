@@ -23,13 +23,15 @@ public class DeviceController {
     private DeviceService deviceService;
 
     //根据用户id获取所有的水表/水压表
-//    @GetMapping("/meters")
-//    @Operation(summary = "根据条件获取设备列表")
-//    public Result<List<DeviceDec>> getAllDevice(
-//            @RequestParam String userId,
-//            @RequestParam(required = false) String type,
-//            @RequestParam(required = false) String deviceName,
-//            @RequestParam(required = false) String status) {
-//
-//    }
+    @GetMapping("/meters")
+    @Operation(summary = "根据条件获取设备列表")
+    public Result<List<DeviceDec>> getAllDevice(
+            @RequestParam String userId,
+            @RequestParam(required = false) String type,
+            @RequestParam(required = false) String deviceName,
+            @RequestParam(required = false) String status) {
+        Result<List<DeviceDec>> res = deviceService.getDevicesByConditions(userId, type, deviceName, status);
+        return res;
+
+    }
 }
