@@ -10,25 +10,25 @@
         再去【设备连接配置表】（device_connection）查通信参数（可能没有，所以用 LEFT JOIN）
     -->
     <select id="getDevicesByConditions" resultType="com.easyarch.vo.devicesInfo.DeviceDec">
-        SELECT dc.baud_rate             AS baudRate,
-               dc.data_bits             AS dataBits,
-               dc.stop_bits             AS stopBits,
-               dc.parity                AS parity,
-               dc.protocol_type         AS protocolType,
+        SELECT dc.baud_rate AS baudRate,
+        dc.data_bits AS dataBits,
+        dc.stop_bits AS stopBits,
+        dc.parity AS parity,
+        dc.protocol_type AS protocolType,
 
-               di.device_type           AS deviceType,
-               di.cumulative_usage      AS cumulativeUsage,
-               di.device_description    AS deviceDescription,
-               di.device_code           AS deviceCode,
-               di.device_name           AS deviceName,
-               di.status                AS status,
-               di.updated_at            AS updatedTime,
-               di.installation_location AS installationLocation
+        di.device_type AS deviceType,
+        di.cumulative_usage AS cumulativeUsage,
+        di.device_description AS deviceDescription,
+        di.device_code AS deviceCode,
+        di.device_name AS deviceName,
+        di.status AS status,
+        di.updated_at AS updatedTime,
+        di.installation_location AS installationLocation
         FROM user_device_relation udr
-                 INNER JOIN device_info di
-                            ON udr.device_code = di.device_code
-                 LEFT JOIN device_connection dc
-                           ON di.device_code = dc.device_code
+        INNER JOIN device_info di
+        ON udr.device_code = di.device_code
+        LEFT JOIN device_connection dc
+        ON di.device_code = dc.device_code
         <where>
             udr.user_id = #{userId}
 
@@ -44,5 +44,29 @@
                 AND di.status = #{status}
             </if>
         </where>
+    </select>
+
+    <!--
+        根据设备编号获取设备详情信息
+    -->
+    <select id="selectByDeviceCode" resultType="com.easyarch.vo.devicesInfo.DeviceDec">
+        select di.device_name           as deviceName,
+               di.device_code           as deviceCode,
+               di.device_type           as deviceType,
+               di.cumulative_usage      as cumulativeUsage,
+               di.installation_location as installationLocation,
+               di.status                as status,
+               di.device_description    as deviceDescription,
+               di.updated_at            as updatedAt,
+               dc.baud_rate             as baudRate,
+               dc.data_bits             as dataBits,
+               dc.stop_bits             as stopBits,
+               dc.parity                as parity,
+               dc.protocol_type         as protocolType
+        from device_info as di
+                 left join device_connection as dc
+                           on di.device_code = dc.device_code
+
+        where di.device_code = #{deviceCode}
     </select>
 </mapper>

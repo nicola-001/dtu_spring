@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface DeviceService extends IService<DeviceInfo> {
     Result<List<DeviceDec>> getDevicesByConditions(String userId, String type, String deviceName, String status);
+
+    Result<DeviceDec> getDeviceInfo(String deviceCode);
 }

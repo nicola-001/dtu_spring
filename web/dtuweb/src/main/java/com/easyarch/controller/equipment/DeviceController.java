@@ -40,11 +40,12 @@ public class DeviceController {
 
     }
 
-    //根据设设备信息获取设备详情信息
+    //根据设备编号获取设备详情信息
     @GetMapping("/devices")
-    @Operation(summary = "根据设备信息获取设备详情")
+    @Operation(summary = "根据设备编号获取设备详情")
     public Result<DeviceDec> getDeviceInfo(@RequestParam String deviceCode) {
 
-        return null;
+        Result<DeviceDec> res = deviceService.getDeviceInfo(deviceCode);
+        return res;
     }
 }

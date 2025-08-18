@@ -5,12 +5,14 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Data
 @Schema(description = "设备信息")
 @AllArgsConstructor
+@NoArgsConstructor
 public class DeviceDec extends Device {
 
     @Schema(description = "波特率")

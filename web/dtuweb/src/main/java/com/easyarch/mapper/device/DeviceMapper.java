@@ -11,4 +11,6 @@ import java.util.List;
 public interface DeviceMapper extends BaseMapper<DeviceInfo> {
 
     List<DeviceDec> getDevicesByConditions(String userId, String type, String deviceName, String status);
+
+    DeviceDec selectByDeviceCode(String deviceCode);
 }
