@@ -5,14 +5,13 @@ import com.easyarch.login.LoginUserHolder;
 import com.easyarch.result.Result;
 import com.easyarch.service.DeviceService;
 import com.easyarch.vo.devicesInfo.DeviceDec;
+import com.easyarch.vo.devicesInfo.NewDevice;
+import com.easyarch.vo.devicesInfo.UpdateDevice;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -47,5 +46,29 @@ public class DeviceController {
 
         Result<DeviceDec> res = deviceService.getDeviceInfo(deviceCode);
         return res;
+    }
+
+    //新增水表/水压表
+    @PostMapping("/devices")
+    @Operation(summary = "新增设备")
+    public Result addDeviceInfo(@RequestBody NewDevice newDevice) {
+        deviceService.addDeviceInfo(newDevice);
+        return Result.ok();
+    }
+
+    //根据设备编号更新设备信息
+    @PutMapping("/devices")
+    @Operation(summary = "更新设备信息")
+    public Result updateDeviceInfo(@RequestBody UpdateDevice updateDevice) {
+        deviceService.updateDeviceInfo(updateDevice);
+        return Result.ok();
+    }
+
+    //根据设备编号删除设备信息
+    @DeleteMapping("/devices/{deviceCode}")
+    @Operation(summary = "删除设备信息")
+    public Result deleteDeviceInfo(@PathVariable String deviceCode) {
+        deviceService.removeByDeviceCode(deviceCode);
+        return Result.ok();
     }
 }

@@ -2,6 +2,7 @@ package com.easyarch.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.easyarch.enums.DeviceStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -27,7 +28,7 @@ public class DeviceInfo extends BaseEntity {
 
     @Schema(description = "设备类型：WATER=水表，PRESSURE=水压")
     @TableField("device_type")
-    private String deviceType;
+    private DeviceStatus deviceType;
 
     @Schema(description = "设备状态")
     @TableField("status")

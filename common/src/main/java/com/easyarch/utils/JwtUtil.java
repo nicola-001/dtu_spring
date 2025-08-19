@@ -70,7 +70,7 @@ public class JwtUtil {
 
     public static void main(String[] args) {
 //        String token = createToken(1L, "admin");
-        String token = createToken(8L, "18322632370");
+        String token = createToken(1L, "admin");
         System.out.println(token);
     }
 

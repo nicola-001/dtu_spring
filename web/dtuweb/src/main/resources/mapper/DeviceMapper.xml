@@ -4,6 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.easyarch.mapper.device.DeviceMapper">
 
+
     <!--
         从【用户设备关联表】找出当前用户能访问的设备，
         拿设备编号去【设备信息表】（device_info）查设备的基本信息，
@@ -69,4 +70,98 @@
 
         where di.device_code = #{deviceCode}
     </select>
+
+    <!--
+        插入设备信息
+    -->
+
+    <!--  插入device_info表中的字段-->
+    <insert id="insertDeviceInfo" parameterType="com.easyarch.vo.devicesInfo.NewDevice"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO device_info (device_code,
+                                 device_name,
+                                 device_description,
+                                 device_type,
+                                 status,
+                                 cumulative_usage,
+                                 owner_id,
+                                 created_by,
+                                 installation_location)
+        VALUES (#{deviceCode},
+                #{deviceName},
+                #{deviceDescription},
+                #{deviceType},
+                #{status},
+                #{cumulativeUsage},
+                #{ownerId},
+                #{createdBy},
+                #{installationLocation})
+    </insert>
+
+    <!--
+        插入device_connection表中的字段
+        注意：
+            useGeneratedKeys=true：让 MyBatis 在插入数据后，把数据库生成的主键自动写回 Java 对象中
+    -->
+    <insert id="insertDeviceConnection" parameterType="com.easyarch.vo.devicesInfo.NewDevice" useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT INTO device_connection
+        (device_code,
+         baud_rate,
+         data_bits,
+         stop_bits,
+         parity,
+         protocol_type,
+         ip_address,
+         port,
+         sim_card_number)
+        VALUES (#{deviceCode},
+                #{baudRate},
+                #{dataBits},
+                #{stopBits},
+                #{parity},
+                #{protocolType},
+                #{ipAddress},
+                #{port},
+                #{simCardNumber})
+    </insert>
+    <!--  绑定用户与设备关系 -->
+    <insert id="insertUserDeviceRelation" parameterType="com.easyarch.entity.UserDeviceRelation">
+        INSERT INTO user_device_relation
+            (user_id, device_code, assigned_by, assigned_at)
+        VALUES (#{userId}, #{deviceCode}, #{assignedBy}, #{assignedAt})
+    </insert>
+
+    <!--
+        更新设备信息
+    -->
+    <!--   更新device_info表中的字段 -->
+    <update id="updateDeviceInfo" parameterType="com.easyarch.vo.devicesInfo.UpdateDevice">
+        UPDATE device_info
+        SET device_name           = #{deviceName},
+            device_description    = #{deviceDescription},
+            status                = #{status},
+            installation_location = #{installationLocation}
+        WHERE device_code = #{deviceCode}
+    </update>
+    <!--   更新device_connection表中的字段 -->
+    <update id="updateDeviceConnection" parameterType="com.easyarch.vo.devicesInfo.UpdateDevice">
+        UPDATE device_connection
+        SET baud_rate       = #{baudRate},
+            data_bits       = #{dataBits},
+            stop_bits       = #{stopBits},
+            parity          = #{parity},
+            protocol_type   = #{protocolType},
+            ip_address      = #{ipAddress},
+            port            = #{port},
+            sim_card_number = #{simCardNumber}
+        WHERE device_code = #{deviceCode}
+    </update>
+
+    <!--    根据设备编号删除设备信息-->
+    <delete id="removeByDeviceCode" parameterType="String">
+        DELETE
+        FROM device_info
+        WHERE device_code = #{deviceCode}
+    </delete>
 </mapper>
