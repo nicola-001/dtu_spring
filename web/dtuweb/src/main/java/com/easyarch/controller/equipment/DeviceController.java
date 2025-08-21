@@ -1,5 +1,7 @@
 package com.easyarch.controller.equipment;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.easyarch.login.LoginUser;
 import com.easyarch.login.LoginUserHolder;
 import com.easyarch.result.Result;
@@ -26,16 +28,19 @@ public class DeviceController {
     //根据用户id获取所有的水表/水压表
     @GetMapping("/meters")
     @Operation(summary = "根据条件获取设备列表")
-    public Result<List<DeviceDec>> getAllDevice(
+    public Result<IPage<DeviceDec>> getAllDevice(
+            @RequestParam String current,
+            @RequestParam String size,
             @RequestParam(required = false) String type,
             @RequestParam(required = false) String deviceName,
             @RequestParam(required = false) String status) {
         //获取当前登录用户id
         LoginUser loginUser = LoginUserHolder.getLoginUser();
-        System.out.println("id是:" + loginUser.getUserId());
+        System.out.println("current:" + current + "size:" + size);
         String userId = String.valueOf(loginUser.getUserId());
-        Result<List<DeviceDec>> res = deviceService.getDevicesByConditions(userId, type, deviceName, status);
-        return res;
+        Page<DeviceDec> deviceDecPage = new Page<>(Long.valueOf(current), Long.valueOf(size));
+        IPage<DeviceDec> res = deviceService.getDevicesByConditions(deviceDecPage, userId, type, deviceName, status);
+        return Result.ok(res);
 
     }
 

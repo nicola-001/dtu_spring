@@ -41,8 +41,16 @@ public class LoginController {
     @Operation(summary = "获取用户信息")
     public Result<UserInfoVo> getInfo() {
         LoginUser loginUser = LoginUserHolder.getLoginUser();
-        System.out.println("id是:"+loginUser.getUserId());
+        System.out.println("id是:" + loginUser.getUserId());
         UserInfoVo result = loginService.getInfo(loginUser.getUserId().toString());
         return Result.ok(result);
+    }
+
+    //登出
+    @PostMapping("/logout")
+    @Operation(summary = "退出登录")
+    public Result<String> logout() {
+        loginService.logout();
+        return Result.ok();
     }
 }

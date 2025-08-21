@@ -46,7 +46,6 @@ public class DeviceDec extends Device {
     @TableField(value = "device_description")
     private String deviceDescription;
 
-    @Schema(description = "更新时间")
-    @TableField(value = "updated_at", fill = FieldFill.UPDATE)
-    private String updatedAt;
+
+
 }

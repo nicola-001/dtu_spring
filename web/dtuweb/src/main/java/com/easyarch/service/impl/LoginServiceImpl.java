@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.easyarch.constant.RedisConstant;
 import com.easyarch.entity.Users;
 import com.easyarch.exception.MyException;
+import com.easyarch.login.LoginUserHolder;
 import com.easyarch.mapper.login.LoginMapper;
 import com.easyarch.result.ResultCodeEnum;
 import com.easyarch.service.LoginService;
@@ -81,10 +82,15 @@ public class LoginServiceImpl extends ServiceImpl<LoginMapper, Users> implements
         return new UserInfoVo(user.getUsername(), user.getEmail(), user.getRealName());
     }
 
+    //退出登录
+    @Override
+    public void logout() {
+        System.out.println(LoginUserHolder.getLoginUser().getUserId());
+        //删除redis中的token
+        redisTemplate.delete(RedisConstant.DTU_LOGIN_PREFIX + LoginUserHolder.getLoginUser().getUserId());
+        log.info("用户退出登录");
 
-
-
-
+    }
 
 
 }

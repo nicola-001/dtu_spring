@@ -10,12 +10,15 @@
         拿设备编号去【设备信息表】（device_info）查设备的基本信息，
         再去【设备连接配置表】（device_connection）查通信参数（可能没有，所以用 LEFT JOIN）
     -->
-    <select id="getDevicesByConditions" resultType="com.easyarch.vo.devicesInfo.DeviceDec">
+    <select id="selectPageVo" resultType="com.easyarch.vo.devicesInfo.DeviceDec">
         SELECT dc.baud_rate AS baudRate,
+        dc.id AS id,
         dc.data_bits AS dataBits,
         dc.stop_bits AS stopBits,
         dc.parity AS parity,
         dc.protocol_type AS protocolType,
+        dc.updated_at AS updateTime,
+        dc.created_at AS createTime,
 
         di.device_type AS deviceType,
         di.cumulative_usage AS cumulativeUsage,
@@ -23,7 +26,6 @@
         di.device_code AS deviceCode,
         di.device_name AS deviceName,
         di.status AS status,
-        di.updated_at AS updatedTime,
         di.installation_location AS installationLocation
         FROM user_device_relation udr
         INNER JOIN device_info di
@@ -46,6 +48,7 @@
             </if>
         </where>
     </select>
+
 
     <!--
         根据设备编号获取设备详情信息

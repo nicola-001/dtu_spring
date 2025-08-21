@@ -13,4 +13,7 @@ public interface LoginService extends IService<Users> {
 
 
     UserInfoVo getInfo(String userId);
+
+    void logout();
+
 }

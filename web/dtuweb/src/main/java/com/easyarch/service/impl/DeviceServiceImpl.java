@@ -1,5 +1,7 @@
 package com.easyarch.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.easyarch.entity.DeviceInfo;
 import com.easyarch.entity.UserDeviceRelation;
@@ -11,7 +13,6 @@ import com.easyarch.vo.devicesInfo.DeviceDec;
 import com.easyarch.vo.devicesInfo.NewDevice;
 import com.easyarch.vo.devicesInfo.UpdateDevice;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,10 +30,10 @@ public class DeviceServiceImpl extends ServiceImpl<DeviceMapper, DeviceInfo> imp
 
     //根据条件获取设备列表
     @Override
-    public Result<List<DeviceDec>> getDevicesByConditions(String userId, String type, String deviceName, String status) {
-        List<DeviceDec> devicesByConditions = deviceMapper.getDevicesByConditions(userId, type, deviceName, status);
-
-        return Result.ok(devicesByConditions);
+    public IPage<DeviceDec> getDevicesByConditions(Page<DeviceDec> page, String userId, String type, String deviceName, String status) {
+        IPage<DeviceDec> devicesByConditions = deviceMapper.selectPageVo(page, userId, type, deviceName, status);
+        System.out.println("查到的数据：" + devicesByConditions);
+        return devicesByConditions;
     }
 
     //根据设备编号获取设备详情信息
