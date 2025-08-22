@@ -19,6 +19,9 @@
         dc.protocol_type AS protocolType,
         dc.updated_at AS updateTime,
         dc.created_at AS createTime,
+        dc.ip_address AS ipAddress,
+        dc.port AS port,
+        dc.sim_card_number AS simCardNumber,
 
         di.device_type AS deviceType,
         di.cumulative_usage AS cumulativeUsage,
@@ -61,7 +64,8 @@
                di.installation_location as installationLocation,
                di.status                as status,
                di.device_description    as deviceDescription,
-               di.updated_at            as updatedAt,
+               di.updated_at            as updateTime,
+               di.created_at            as createTime,
                dc.baud_rate             as baudRate,
                dc.data_bits             as dataBits,
                dc.stop_bits             as stopBits,
@@ -144,7 +148,8 @@
         SET device_name           = #{deviceName},
             device_description    = #{deviceDescription},
             status                = #{status},
-            installation_location = #{installationLocation}
+            installation_location = #{installationLocation},
+            device_type           = #{deviceType}
         WHERE device_code = #{deviceCode}
     </update>
     <!--   更新device_connection表中的字段 -->

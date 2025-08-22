@@ -1,6 +1,7 @@
 package com.easyarch.vo.devicesInfo;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.easyarch.enums.DeviceType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,6 +16,10 @@ public class UpdateDevice extends Device {
     @Schema(description = "设备描述")
     @TableField(value = "device_description")
     private String deviceDescription;
+
+    @Schema(description = "设别类型")
+    @TableField(value = "device_type")
+    private DeviceType deviceType;
 
     @Schema(description = "波特率")
     @TableField(value = "baud_rate")

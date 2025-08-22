@@ -46,6 +46,17 @@ public class DeviceDec extends Device {
     @TableField(value = "device_description")
     private String deviceDescription;
 
+    @Schema(description = "ip地址")
+    @TableField(value = "ip_address")
+    private String ipAddress;
+
+    @Schema(description = "端口号")
+    @TableField(value = "port")
+    private String port;
+
+    @Schema(description = "SIM卡号")
+    @TableField(value = "sim_card_number")
+    private String simCardNumber;
 
 
 }
